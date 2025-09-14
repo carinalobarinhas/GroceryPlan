@@ -1,4 +1,4 @@
-package br.com.carina.grocery_plan.design
+package br.com.carina.grocery_plan.design.foundation
 
 import android.content.res.Configuration
 import androidx.compose.ui.tooling.preview.Preview

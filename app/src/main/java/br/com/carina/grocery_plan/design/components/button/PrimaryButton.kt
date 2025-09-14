@@ -1,4 +1,4 @@
-package br.com.carina.grocery_plan.design.button
+package br.com.carina.grocery_plan.design.components.button
 
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.CircleShape
@@ -8,16 +8,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import br.com.carina.grocery_plan.design.foundation.DarkThemedPreview
+import br.com.carina.grocery_plan.design.foundation.GroceryPlanTheme
+import br.com.carina.grocery_plan.design.foundation.LightThemedPreview
 
 @Composable
 fun PrimaryButton(
     modifier: Modifier = Modifier,
     text: String,
     enabled: Boolean = true,
-    shape: Shape = CircleShape,
     onClick: () -> Unit,
 ) {
     val colors = ButtonDefaults.buttonColors().copy(
@@ -29,7 +30,7 @@ fun PrimaryButton(
         onClick = onClick,
         enabled = enabled,
         modifier = modifier.height(56.dp),
-        shape = shape,
+        shape = CircleShape,
         elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp),
         colors = colors
     ) {
@@ -40,11 +41,11 @@ fun PrimaryButton(
     }
 }
 
-@br.com.carina.grocery_plan.design.LightThemedPreview
-@br.com.carina.grocery_plan.design.DarkThemedPreview
+@LightThemedPreview
+@DarkThemedPreview
 @Composable
 fun PrimaryButtonPreview() {
-    _root_ide_package_.br.com.carina.grocery_plan.design.GroceryPlanTheme {
+    GroceryPlanTheme {
         PrimaryButton(
             text = "Criar Carrinho",
             onClick = {}

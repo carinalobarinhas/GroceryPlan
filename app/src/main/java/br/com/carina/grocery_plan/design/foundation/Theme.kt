@@ -1,4 +1,4 @@
-package br.com.carina.grocery_plan.design
+package br.com.carina.grocery_plan.design.foundation
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

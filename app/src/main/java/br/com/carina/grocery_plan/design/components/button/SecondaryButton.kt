@@ -1,4 +1,4 @@
-package br.com.carina.grocery_plan.design.button
+package br.com.carina.grocery_plan.design.components.button
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.height
@@ -10,17 +10,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Transparent
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import br.com.carina.grocery_plan.design.GroceryPlanTheme
+import br.com.carina.grocery_plan.design.foundation.GroceryPlanTheme
+import br.com.carina.grocery_plan.design.foundation.DarkThemedPreview
+import br.com.carina.grocery_plan.design.foundation.LightThemedPreview
 
 @Composable
 fun SecondaryButton(
     modifier: Modifier = Modifier,
     text: String,
     enabled: Boolean = true,
-    shape: Shape = CircleShape,
     onClick: () -> Unit,
 ) {
     val colors = ButtonDefaults.buttonColors().copy(
@@ -39,7 +39,7 @@ fun SecondaryButton(
         enabled = enabled,
         modifier = modifier.height(56.dp),
         colors = colors,
-        shape = shape,
+        shape = CircleShape,
         border = border,
         elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp)
     ) {
@@ -50,8 +50,8 @@ fun SecondaryButton(
     }
 }
 
-@br.com.carina.grocery_plan.design.LightThemedPreview
-@br.com.carina.grocery_plan.design.DarkThemedPreview
+@LightThemedPreview
+@DarkThemedPreview
 @Composable
 fun SecondaryButtonPreview() {
     GroceryPlanTheme {
