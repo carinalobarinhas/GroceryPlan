@@ -4,4 +4,5 @@ data class Purchase(
     val date: String,
     val marketName: String,
     val price: String,
+    val products: List<Product>
 )

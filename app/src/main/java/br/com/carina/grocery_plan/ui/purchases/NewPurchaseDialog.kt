@@ -1,39 +1,48 @@
-package br.com.zeenow.zeenow.v3_clean_code.core.ui.widget
+package br.com.carina.grocery_plan.ui.purchases
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import br.com.zeenow.zeenow.R
-import br.com.zeenow.zeenow.v3_clean_code.core.annotation.ThemedPreview
-import br.com.zeenow.zeenow.v3_clean_code.core.ui.states.ZeeConfirmationDialogData
-import br.com.zeenow.zeenow.v3_clean_code.core.ui.states.ZeeDialogState
-import br.com.zeenow.zeenow.v3_clean_code.core.ui.theme.ZnBlack
-import br.com.zeenow.zeenow.v3_clean_code.core.ui.theme.ZnWhite
+import br.com.carina.grocery_plan.R
+import br.com.carina.grocery_plan.data.DialogState
+import br.com.carina.grocery_plan.design.components.CustomTextField
+import br.com.carina.grocery_plan.design.components.button.PrimaryButton
+import br.com.carina.grocery_plan.design.foundation.DarkThemedPreview
+import br.com.carina.grocery_plan.design.foundation.GroceryPlanTheme
+import br.com.carina.grocery_plan.design.foundation.LSpacing
+import br.com.carina.grocery_plan.design.foundation.LightThemedPreview
+import br.com.carina.grocery_plan.design.foundation.XXXLSpacing
 
 @Composable
-fun ZeeConfirmationDialog(
-    state: ZeeDialogState<ZeeConfirmationDialogData>,
-    onConfirm: () -> Unit = {},
+fun NewPurchaseDialog(
+    state: DialogState<Unit>,
+    onConfirm: (String) -> Unit = {},
     onDismiss: () -> Unit = {},
-    content: (@Composable () -> Unit)? = null
 ) {
+    var savedName by remember { mutableStateOf("") }
+
     state.currentDialogData?.let { data ->
         Dialog(
             onDismissRequest = onDismiss,
@@ -43,71 +52,64 @@ fun ZeeConfirmationDialog(
                         .fillMaxWidth()
                         .wrapContentHeight()
                         .clip(RoundedCornerShape(size = 16.dp))
-                        .background(ZnWhite),
+                        .background(MaterialTheme.colorScheme.surface),
                     contentAlignment = Alignment.TopEnd
                 ) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 32.dp),
+                            .padding(
+                                top = 32.dp,
+                                bottom = XXXLSpacing,
+                                start = XXXLSpacing,
+                                end = XXXLSpacing
+                            )
+                            .background(MaterialTheme.colorScheme.surface)
                     ) {
-                        Heading1(
+                        Text(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 20.dp),
-                            text = data.title.asString(),
-                            textAlign = TextAlign.Center
+                            style = MaterialTheme.typography.headlineMedium,
+                            text = "Novo Carrinho",
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colorScheme.onBackground
                         )
-                        VerticalSpacer(size = 16.dp)
-                        if (content != null) {
-                            content()
-                        } else {
-                            Paragraph(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 20.dp),
-                                text = data.text.asString(),
-                                textAlign = TextAlign.Center
-                            )
-                        }
-                        VerticalSpacer(size = 16.dp)
-                        Row(modifier = Modifier.fillMaxWidth()) {
-                            data.dismissButton?.let {
-                                ZeeButton(
-                                    modifier = Modifier.weight(1f),
-                                    title = data.dismissButton.asString(),
-                                    type = ButtonType.POPUP_HALF_LEFT,
-                                    style = ButtonStyle.SECONDARY_POP_UP,
-                                    onClick = onDismiss
-                                )
-                            }
-                            ZeeButton(
-                                modifier = Modifier.weight(1f),
-                                title = data.confirmButton.asString(),
-                                type = if (data.dismissButton == null) {
-                                    ButtonType.POPUP
-                                } else {
-                                    ButtonType.POPUP_HALF_RIGHT
-                                },
-                                style = data.buttonStyle,
-                                onClick = {
-                                    onConfirm()
-                                    onDismiss()
-                                }
-                            )
+                        Spacer(modifier = Modifier.size(XXXLSpacing))
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            text = "Adicione o nome do mercado que vocês deseja criar o carrinho",
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                        Spacer(modifier = Modifier.size(LSpacing))
+                        CustomTextField(
+                            label = "Nome do mercado",
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            onTextChange = { savedName = it },
+                        )
+                        Spacer(modifier = Modifier.size(XXXLSpacing))
+                        PrimaryButton(
+                            modifier = Modifier.fillMaxWidth(),
+                            text = "Salvar Carrinho"
+                        ) {
+                            state.hideDialog()
+                            onConfirm(savedName)
                         }
                     }
 
-                    Box(
-                        modifier = Modifier
-                            .size(48.dp)
-                            .clickable { state.hideDialog() },
-                        contentAlignment = Alignment.Center
+                    IconButton(
+                        modifier = Modifier,
+                        onClick = {
+                            state.hideDialog()
+                        }
                     ) {
                         Icon(
-                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_close),
-                            contentDescription = "",
-                            tint = ZnBlack
+                            painter = painterResource(R.drawable.ic_close),
+                            tint = MaterialTheme.colorScheme.onBackground,
+                            contentDescription = "Botão de fechar"
                         )
                     }
                 }
@@ -116,16 +118,19 @@ fun ZeeConfirmationDialog(
     }
 }
 
-@ThemedPreview
+@LightThemedPreview
+@DarkThemedPreview
 @Composable
-fun ZeeConfirmationDialogPreview() {
-    val state = ZeeDialogState<ZeeConfirmationDialogData>()
-    state.showDialog(ZeeConfirmationDialogData.DeleteConfirmation)
-    ZeeConfirmationDialog(
-        state = state,
-        onConfirm = {},
-        onDismiss = {}
-    )
+fun NewPurchaseDialogPreview() {
+    val state = DialogState<Unit>()
+    state.showDialog(Unit)
+    GroceryPlanTheme {
+        NewPurchaseDialog(
+            state = state,
+            onConfirm = {},
+            onDismiss = {}
+        )
+    }
 }
 
 

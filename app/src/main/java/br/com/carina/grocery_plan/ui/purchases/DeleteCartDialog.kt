@@ -1,8 +1,10 @@
 package br.com.carina.grocery_plan.ui.purchases
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -27,16 +29,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import br.com.carina.grocery_plan.R
 import br.com.carina.grocery_plan.data.DialogState
-import br.com.carina.grocery_plan.design.components.CustomTextField
 import br.com.carina.grocery_plan.design.components.button.PrimaryButton
+import br.com.carina.grocery_plan.design.components.button.SecondaryButton
 import br.com.carina.grocery_plan.design.foundation.DarkThemedPreview
 import br.com.carina.grocery_plan.design.foundation.GroceryPlanTheme
-import br.com.carina.grocery_plan.design.foundation.LSpacing
 import br.com.carina.grocery_plan.design.foundation.LightThemedPreview
 import br.com.carina.grocery_plan.design.foundation.XXXLSpacing
 
 @Composable
-fun NewPurchaseDialog(
+fun DeleteCartDialog(
     state: DialogState<Unit>,
     onConfirm: (String) -> Unit = {},
     onDismiss: () -> Unit = {},
@@ -71,7 +72,7 @@ fun NewPurchaseDialog(
                                 .fillMaxWidth()
                                 .padding(horizontal = 20.dp),
                             style = MaterialTheme.typography.headlineMedium,
-                            text = "Novo Carrinho",
+                            text = "Excluir Carrinho",
                             textAlign = TextAlign.Center,
                             color = MaterialTheme.colorScheme.onBackground
                         )
@@ -79,25 +80,28 @@ fun NewPurchaseDialog(
                         Text(
                             modifier = Modifier
                                 .fillMaxWidth(),
-                            text = "Adicione o nome do mercado que vocês deseja criar o carrinho",
+                            text = "Deseja realmente excluir o carrinho?",
                             textAlign = TextAlign.Center,
                             color = MaterialTheme.colorScheme.onBackground
                         )
-                        Spacer(modifier = Modifier.size(LSpacing))
-                        CustomTextField(
-                            label = "Nome do mercado",
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 20.dp),
-                            onTextChange = { savedName = it },
-                        )
                         Spacer(modifier = Modifier.size(XXXLSpacing))
-                        PrimaryButton(
+                        Row(
                             modifier = Modifier.fillMaxWidth(),
-                            text = "Salvar Carrinho"
+                            horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterHorizontally)
                         ) {
-                            state.hideDialog()
-                            onConfirm(savedName)
+                            SecondaryButton(
+                                modifier = Modifier.weight(1f),
+                                text = "Cancelar"
+                            ) {
+                                state.hideDialog()
+                            }
+                            PrimaryButton(
+                                modifier = Modifier.weight(1f),
+                                text = "Remover"
+                            ) {
+                                state.hideDialog()
+                                onConfirm(savedName)
+                            }
                         }
                     }
 
@@ -122,11 +126,11 @@ fun NewPurchaseDialog(
 @LightThemedPreview
 @DarkThemedPreview
 @Composable
-fun NewPurchaseDialogPreview() {
+fun DeleteCartDialogPreview() {
     val state = DialogState<Unit>()
     state.showDialog(Unit)
     GroceryPlanTheme {
-        NewPurchaseDialog(
+        DeleteCartDialog(
             state = state,
             onConfirm = {},
             onDismiss = {}

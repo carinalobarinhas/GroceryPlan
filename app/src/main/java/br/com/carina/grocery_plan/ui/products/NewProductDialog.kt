@@ -1,8 +1,10 @@
-package br.com.carina.grocery_plan.ui.purchases
+package br.com.carina.grocery_plan.ui.products
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,6 +17,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -33,15 +36,17 @@ import br.com.carina.grocery_plan.design.foundation.DarkThemedPreview
 import br.com.carina.grocery_plan.design.foundation.GroceryPlanTheme
 import br.com.carina.grocery_plan.design.foundation.LSpacing
 import br.com.carina.grocery_plan.design.foundation.LightThemedPreview
+import br.com.carina.grocery_plan.design.foundation.SSpacing
 import br.com.carina.grocery_plan.design.foundation.XXXLSpacing
 
 @Composable
-fun NewPurchaseDialog(
+fun NewProductDialog(
     state: DialogState<Unit>,
-    onConfirm: (String) -> Unit = {},
+    onConfirm: (String, Int) -> Unit = {_, _ -> },
     onDismiss: () -> Unit = {},
 ) {
     var savedName by remember { mutableStateOf("") }
+    var quantity by remember { mutableIntStateOf(0) }
 
     state.currentDialogData?.let { data ->
         Dialog(
@@ -71,7 +76,7 @@ fun NewPurchaseDialog(
                                 .fillMaxWidth()
                                 .padding(horizontal = 20.dp),
                             style = MaterialTheme.typography.headlineMedium,
-                            text = "Novo Carrinho",
+                            text = "Novo Produto",
                             textAlign = TextAlign.Center,
                             color = MaterialTheme.colorScheme.onBackground
                         )
@@ -79,7 +84,7 @@ fun NewPurchaseDialog(
                         Text(
                             modifier = Modifier
                                 .fillMaxWidth(),
-                            text = "Adicione o nome do mercado que vocês deseja criar o carrinho",
+                            text = "Adicione o nome do produto e quantidade de items",
                             textAlign = TextAlign.Center,
                             color = MaterialTheme.colorScheme.onBackground
                         )
@@ -87,18 +92,57 @@ fun NewPurchaseDialog(
                         CustomTextField(
                             label = "Nome do mercado",
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 20.dp),
+                                .fillMaxWidth(),
                             onTextChange = { savedName = it },
                         )
-                        Spacer(modifier = Modifier.size(XXXLSpacing))
+
+                        Spacer(modifier = Modifier.size(LSpacing))
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            IconButton(
+                                onClick = {
+                                    quantity = quantity - 1
+                                }
+                            ) {
+                                Icon(
+                                    painter = painterResource(R.drawable.ic_decrement),
+                                    tint = MaterialTheme.colorScheme.primary,
+                                    contentDescription = "Diminuir quantidade"
+                                )
+                            }
+
+                            Spacer(modifier = Modifier.padding(horizontal = SSpacing))
+                            Text(
+                                text = quantity.toString(),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onBackground
+                            )
+                            Spacer(modifier = Modifier.padding(horizontal = SSpacing))
+                            IconButton(
+                                onClick = {
+                                    quantity = quantity + 1
+                                }
+                            ) {
+                                Icon(
+                                    painter = painterResource(R.drawable.ic_increment),
+                                    tint = MaterialTheme.colorScheme.primary,
+                                    contentDescription = "Aumentar quantidade"
+                                )
+                            }
+                        }
+                        Spacer(modifier = Modifier.size(LSpacing))
                         PrimaryButton(
                             modifier = Modifier.fillMaxWidth(),
                             text = "Salvar Carrinho"
                         ) {
                             state.hideDialog()
-                            onConfirm(savedName)
+                            onConfirm(savedName, quantity)
                         }
+
                     }
 
                     IconButton(
@@ -122,13 +166,13 @@ fun NewPurchaseDialog(
 @LightThemedPreview
 @DarkThemedPreview
 @Composable
-fun NewPurchaseDialogPreview() {
+fun NewProductDialogPreview() {
     val state = DialogState<Unit>()
     state.showDialog(Unit)
     GroceryPlanTheme {
-        NewPurchaseDialog(
+        NewProductDialog(
             state = state,
-            onConfirm = {},
+            onConfirm = {_, _ -> },
             onDismiss = {}
         )
     }

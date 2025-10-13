@@ -36,12 +36,12 @@ import br.com.carina.grocery_plan.design.foundation.LightThemedPreview
 import br.com.carina.grocery_plan.design.foundation.XXXLSpacing
 
 @Composable
-fun NewPurchaseDialog(
+fun AddPriceDialog(
     state: DialogState<Unit>,
     onConfirm: (String) -> Unit = {},
     onDismiss: () -> Unit = {},
 ) {
-    var savedName by remember { mutableStateOf("") }
+    var price by remember { mutableStateOf("") }
 
     state.currentDialogData?.let { data ->
         Dialog(
@@ -71,7 +71,7 @@ fun NewPurchaseDialog(
                                 .fillMaxWidth()
                                 .padding(horizontal = 20.dp),
                             style = MaterialTheme.typography.headlineMedium,
-                            text = "Novo Carrinho",
+                            text = "Adicionar Preço",
                             textAlign = TextAlign.Center,
                             color = MaterialTheme.colorScheme.onBackground
                         )
@@ -79,25 +79,25 @@ fun NewPurchaseDialog(
                         Text(
                             modifier = Modifier
                                 .fillMaxWidth(),
-                            text = "Adicione o nome do mercado que vocês deseja criar o carrinho",
+                            text = "Adicione o preço gasto nessa compra",
                             textAlign = TextAlign.Center,
                             color = MaterialTheme.colorScheme.onBackground
                         )
                         Spacer(modifier = Modifier.size(LSpacing))
                         CustomTextField(
-                            label = "Nome do mercado",
+                            label = "Preço",
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 20.dp),
-                            onTextChange = { savedName = it },
+                                .fillMaxWidth(),
+                            isMoney = true,
+                            onTextChange = { price = it },
                         )
                         Spacer(modifier = Modifier.size(XXXLSpacing))
                         PrimaryButton(
                             modifier = Modifier.fillMaxWidth(),
-                            text = "Salvar Carrinho"
+                            text = "Salvar Preço"
                         ) {
                             state.hideDialog()
-                            onConfirm(savedName)
+                            onConfirm(price)
                         }
                     }
 
@@ -122,11 +122,11 @@ fun NewPurchaseDialog(
 @LightThemedPreview
 @DarkThemedPreview
 @Composable
-fun ZeeConfirmationDialogPreview() {
+fun AddPriceDialogPreview() {
     val state = DialogState<Unit>()
     state.showDialog(Unit)
     GroceryPlanTheme {
-        NewPurchaseDialog(
+        AddPriceDialog(
             state = state,
             onConfirm = {},
             onDismiss = {}

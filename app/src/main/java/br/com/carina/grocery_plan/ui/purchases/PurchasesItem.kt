@@ -1,5 +1,6 @@
 package br.com.carina.grocery_plan.ui.purchases
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import br.com.carina.grocery_plan.R
 import br.com.carina.grocery_plan.data.Purchase
 import br.com.carina.grocery_plan.design.foundation.DarkThemedPreview
@@ -31,9 +33,14 @@ import br.com.carina.grocery_plan.design.foundation.XLSpacing
 @Composable
 fun PurchasesItem(
     purchase: Purchase,
-    onDelete: (Purchase) -> Unit
+    onDelete: (Purchase) -> Unit,
+    onAddPrice: () -> Unit,
+    onClick: () -> Unit = {}
 ) {
-    Card {
+    val price = purchase.price
+    Card(
+        modifier = Modifier.clickable(onClick = onClick)
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -45,7 +52,7 @@ fun PurchasesItem(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(SSpacing)
         ) {
-            Column() {
+            Column {
                 Text(
                     text = purchase.date,
                     style = MaterialTheme.typography.bodyMedium
@@ -57,9 +64,15 @@ fun PurchasesItem(
             }
             Spacer(modifier = Modifier.weight(1f))
             Text(
-                text = purchase.price,
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Bold
+                modifier = Modifier.clickable(enabled = price == "") {
+                    onAddPrice()
+                },
+                text = if (price == "") "Adicionar Preço" else price,
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    textDecoration = if (price == "") TextDecoration.Underline else TextDecoration.None
+                ),
+                fontWeight = FontWeight.Bold,
+                color = if (price == "") MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
             )
             IconButton(
                 onClick = {
@@ -82,18 +95,21 @@ fun PurchasesItem(
 fun PurchasesItemPreview() {
     GroceryPlanTheme {
         LazyColumn(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
                 .padding(LSpacing),
             verticalArrangement = Arrangement.spacedBy(LSpacing)
         ) {
-            items(20) {
+            items(2) { index ->
                 PurchasesItem(
                     Purchase(
                         date = "Compra do dia 10/10",
                         marketName = "Nome do Mercado",
-                        price = "R$ 600,00",
+                        price = if (index % 2 == 0) "R$ 600,00" else "",
+                        products = emptyList()
                     ),
-                    onDelete = {}
+                    onDelete = {},
+                    onAddPrice = {}
                 )
             }
         }
