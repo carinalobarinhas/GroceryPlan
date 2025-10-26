@@ -1,3 +1,61 @@
 <resources>
     <string name="app_name">GroceryPlan</string>
+
+    <!-- ProductView -->
+    <string name="product_view_empty">Você ainda não tem produtos cadastradas, crie um novo para começar</string>
+    <string name="product_view_title">Lista de Produtos</string>
+    <string name="product_view_create_button">Criar Novo Item</string>
+
+    <!-- ProductItem -->
+    <string name="product_item_delete">Excluir produto</string>
+    <string name="product_item_reduce">Diminuir quantidade</string>
+    <string name="product_item_increase">Aumentar quantidade</string>
+
+    <!-- NewProductDialog -->
+    <string name="new_product_dialog_title">Novo Produto</string>
+    <string name="new_product_dialog_message">Adicione o nome do produto e quantidade de items</string>
+    <string name="new_product_dialog_label">Nome do mercado</string>
+    <string name="new_product_dialog_reduce">Diminuir quantidade</string>
+    <string name="new_product_dialog_increase">Aumentar quantidade</string>
+    <string name="new_product_dialog_save">Salvar Carrinho</string>
+    <string name="new_product_dialog_close">Botão de fechar</string>
+
+    <!-- DeleteProductDialog -->
+    <string name="delete_product_dialog_title">Excluir Produto</string>
+    <string name="delete_product_dialog_message">Deseja realmente excluir o produto?</string>
+    <string name="delete_product_dialog_cancel">Cancelar</string>
+    <string name="delete_product_dialog_remove">Remover</string>
+    <string name="delete_product_dialog_close">Botão de fechar</string>
+
+    <!-- PurchasesView -->
+    <string name="purchases_view_empty">Você ainda não tem compras cadastradas, crie um novo para começar</string>
+    <string name="purchases_view_title">Grocery Plan</string>
+    <string name="purchases_view_create">Criar Carrinho</string>
+
+    <!-- PurchasesItem -->
+    <string name="purchases_item_add_label">Adicionar Preço</string>
+    <string name="purchases_item_delete">Botão de excluir</string>
+
+    <!-- AddPriceDialog -->
+    <string name="add_price_dialog_add_title">Adicionar Preço</string>
+    <string name="add_price_dialog_edit_title">Editar Preço</string>
+    <string name="add_price_dialog_add_message">Adicione o preço gasto nessa compra</string>
+    <string name="add_price_dialog_edit_message">Edite o preço gasto nessa compra</string>
+    <string name="add_price_dialog_price_label">Preço</string>
+    <string name="add_price_dialog_save">Salvar Preço</string>
+    <string name="add_price_dialog_close">Botão de fechar</string>
+
+    <!-- DeletePurchaseDialog -->
+    <string name="delete_purchase_dialog_title">Excluir Carrinho</string>
+    <string name="delete_purchase_dialog_message">Deseja realmente excluir o carrinho?</string>
+    <string name="delete_purchase_dialog_cancel">Cancelar</string>
+    <string name="delete_purchase_dialog_remove">Remover</string>
+    <string name="delete_purchase_dialog_close">Botão de fechar</string>
+
+    <!-- NewPurchaseDialog -->
+    <string name="new_purchase_dialog_title">Novo Carrinho</string>
+    <string name="new_purchase_dialog_message">Adicione o nome do mercado que vocês deseja criar o carrinho</string>
+    <string name="new_purchase_dialog_label">Nome do mercado</string>
+    <string name="new_purchase_dialog_save">Salvar Carrinho</string>
+    <string name="new_purchase_dialog_close">Botão de fechar</string>
 </resources>
