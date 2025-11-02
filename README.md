@@ -20,7 +20,7 @@
     - Android Jetpack (ViewModel, LiveData / Flow, etc)
     - Dependency injection (e.g., Dagger/Hilt)
     - Data persistence (Room)
-    - UI components: Jetpack Compose or XML layouts — *mention whichever you’re using*
+    - UI components: Jetpack Compose or XML layouts
 - **Build system**: Gradle (Kotlin DSL)
 - **Version Control**: Git (GitHub repo)
 
